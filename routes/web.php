@@ -7,3 +7,5 @@ Route::get('/', [TransactionController::class, 'index'])->name('transactions.ind
 Route::get('/create', [TransactionController::class, 'create'])->name('transactions.create');
 Route::post('/store', [TransactionController::class, 'store'])->name('transactions.store');
 
+// DELETE
+Route::delete('/delete/{id}', [TransactionController::class, 'destroy'])->name('transactions.delete');

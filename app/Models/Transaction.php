@@ -1,15 +1,19 @@
 <?php
 
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LaracraftTech\LaravelDateScopes\DateScopes;
 
 class Transaction extends Model
 {
-    use HasFactory, DateScopes;
+    use DateScopes;
 
-    protected $fillable = ['title', 'amount'];
+    public $timestamps = false;
+
+    protected $fillable = ['title', 'amount', 'created_at'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 }
