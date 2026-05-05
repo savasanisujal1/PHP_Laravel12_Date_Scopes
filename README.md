@@ -760,4 +760,7 @@ PHP_Laravel12_Date_Scopes/
 ---
 
 Your PHP_Laravel12_Date_Scopes Project is now ready!
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
