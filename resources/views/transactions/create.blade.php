@@ -1,83 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" x-data="{ darkMode: localStorage.getItem('dark') === 'true' }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Transaction</title>
-
-    <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        /* Card hover */
-        .card-hover {
-            border-radius: 0.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Gradient Header */
-        .card-header-gradient {
-            background: linear-gradient(135deg, #4e54c8, #8f94fb);
-            color: #fff;
-            border-top-left-radius: 0.8rem;
-            border-top-right-radius: 0.8rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #fff;
-        }
+        body { background-color: #f8f9fa; transition: background 0.3s, color 0.3s; }
+        .dark body { background-color: #121212; color: #fff; }
+        .dark .card { background-color: #1e1e1e; color: #fff; border: 1px solid #333; }
+        .dark .form-control { background-color: #2d2d2d; border-color: #444; color: #fff; }
+        .card-hover { border-radius: 0.8rem; transition: all 0.3s ease; }
+        .card-header-gradient { background: linear-gradient(135deg, #4e54c8, #8f94fb); color: #fff; border-top-left-radius: 0.8rem; border-top-right-radius: 0.8rem; }
     </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('transactions.index') }}">Laravel Transaction</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('transactions.index') ? 'active' : '' }}"
-                            href="{{ route('transactions.index') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('transactions.create') ? 'active' : '' }}"
-                            href="{{ route('transactions.create') }}"><i class="bi bi-plus-circle me-1"></i> Add Transaction</a>
-                    </li>
-                </ul>
+            <div class="d-flex">
+                <button @click="darkMode = !darkMode; localStorage.setItem('dark', darkMode)" class="btn btn-sm btn-outline-light">
+                    <i class="bi" :class="darkMode ? 'bi-sun-fill' : 'bi-moon-fill'"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container my-5 flex-grow-1">
         <div class="row justify-content-center">
             <div class="col-md-8">
-
                 <div class="card card-hover shadow-sm">
                     <div class="card-header card-header-gradient">
                         <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Add New Transaction</h4>
                     </div>
-                    <div class="card-body bg-white p-4">
-
-                        <!-- Validation Errors -->
+                    <div class="card-body p-4">
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -88,44 +49,33 @@
                         </div>
                         @endif
 
-                        <!-- Form -->
                         <form action="{{ route('transactions.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="title" class="form-label">Transaction Title</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                    placeholder="Enter transaction title" required>
+                                <label class="form-label">Transaction Title</label>
+                                <input type="text" class="form-control" name="title" placeholder="Enter title" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount" class="form-label">Amount</label>
-                                <input type="number" step="0.01" class="form-control" id="amount" name="amount"
-                                    placeholder="Enter amount" required>
+                                <label class="form-label">Amount</label>
+                                <input type="number" step="0.01" class="form-control" name="amount" placeholder="Enter amount" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="created_at" class="form-label">Transaction Date</label>
-                                <input type="date" class="form-control" id="created_at" name="created_at" required>
+                                <label class="form-label">Transaction Date</label>
+                                <input type="date" class="form-control" name="created_at" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100"><i
-                                    class="bi bi-save me-2"></i>Save Transaction</button>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-save me-2"></i>Save Transaction
+                            </button>
                         </form>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="text-center text-secondary py-4 mt-auto shadow-sm">
-        &copy; 2026 Laravel Date Scopes Demo. All rights reserved.
-    </footer>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
