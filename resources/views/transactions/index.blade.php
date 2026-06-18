@@ -61,7 +61,7 @@
     <a href="{{ route('transactions.export.excel') }}" class="btn btn-outline-success rounded-pill">
         <i class="bi bi-file-earmark-excel"></i> Export Excel
     </a>
-</div>
+</div> 
     </div>
 
     <div class="glass-card p-3">

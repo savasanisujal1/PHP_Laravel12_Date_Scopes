@@ -12,7 +12,7 @@
                 <a class="page-link rounded-pill border-0 shadow-sm" href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a>
             </li>
         @endif
-
+ 
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
             @if (is_array($element))
